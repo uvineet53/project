@@ -26,9 +26,9 @@ export function Navigation({ onCartOpen }: { onCartOpen: () => void }) {
             <Button variant="ghost" className="sm:hidden">
               <Menu className="h-5 w-5" />
             </Button>
-            <span className="text-xl font-bold text-blue-600 ml-2 cursor-pointer" onClick={() => navigate('/')}>
+            <div className="text-xl font-bold text-blue-600 ml-2 cursor-pointer" onClick={() => navigate('/')}>
               BringIt
-            </span>
+            </div>
           </div>
           <div className="flex items-center space-x-4">
             {user ? (
