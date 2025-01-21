@@ -1,3 +1,5 @@
+import { Product } from "."
+
 export type Database = {
   public: {
     Tables: {
@@ -9,6 +11,11 @@ export type Database = {
           total: number
           created_at: string
           updated_at: string
+          order_items: Array<{
+              quantity: number;
+              product_id: string;
+              products: Product;
+            }>;
         }
         Insert: {
           id?: string
