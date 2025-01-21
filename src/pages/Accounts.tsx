@@ -52,22 +52,22 @@ function AddressesForm() {
       <Input
         label="Street Address"
         {...register('street', { required: 'Street address is required' })}
-        error={errors.street?.message}
+        error={errors.street?.message as string as string}
       />
       <Input
         label="City"
         {...register('city', { required: 'City is required' })}
-        error={errors.city?.message}
+        error={errors.city?.message as string as string}
       />
       <Input
         label="State"
         {...register('state', { required: 'State is required' })}
-        error={errors.state?.message}
+        error={errors.state?.message as string as string}
       />
       <Input
         label="Postal Code"
         {...register('postalCode', { required: 'Postal code is required' })}
-        error={errors.postalCode?.message}
+        error={errors.postalCode?.message as string as string}
       />
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Saving...' : 'Save Address'}
@@ -93,17 +93,17 @@ function PaymentInfoForm() {
       <Input
         label="Card Number"
         {...register('cardNumber', { required: 'Card number is required' })}
-        error={errors.cardNumber?.message}
+        error={errors.cardNumber?.message as string}
       />
       <Input
         label="Expiry Date"
         {...register('expiryDate', { required: 'Expiry date is required' })}
-        error={errors.expiryDate?.message}
+        error={errors.expiryDate?.message as string}
       />
       <Input
         label="CVV"
         {...register('cvv', { required: 'CVV is required' })}
-        error={errors.cvv?.message}
+        error={errors.cvv?.message as string}
       />
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Saving...' : 'Save Payment Info'}
@@ -130,13 +130,13 @@ function AccountSettingsForm() {
         label="Email"
         type="email"
         {...register('email', { required: 'Email is required' })}
-        error={errors.email?.message}
+        error={errors.email?.message as string}
       />
       <Input
         label="Password"
         type="password"
         {...register('password', { required: 'Password is required' })}
-        error={errors.password?.message}
+        error={errors.password?.message as string}
       />
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Saving...' : 'Save Settings'}
