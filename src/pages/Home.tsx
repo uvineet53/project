@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { Product, Order } from '@/types';
 import { ProductCard } from '@/components/ProductCard';
 import { useAuth } from '@/lib/auth';
-import { Package } from 'lucide-react';
+import { Package, Search } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import algoliasearch from 'algoliasearch';
+import ProductSearch from '@/components/ProductSearch';
+
+const client = algoliasearch('EVDERDZZER', '1d8fc4d899e22a051ae09303906825d8');
+const index = client.initIndex('movies_index');
 
 export function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const processRecords = async () => {
+    try {
+      await index.saveObjects(products||[], { autoGenerateObjectIDIfNotExist: true });
+      console.log('Successfully indexed objects!');
+    } catch (error) {
+      console.error('Error fetching or indexing data:', error);
+    }
+  };
+
 
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ['products'],
@@ -62,6 +76,10 @@ export function Home() {
     enabled: !!user,
   });
 
+  useEffect(() => {
+    processRecords();
+  }, [products]);
+
   if (productsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -96,11 +114,10 @@ export function Home() {
                     <span className="text-sm text-gray-500">
                       Order #{order.id.slice(0, 8)}
                     </span>
-                    <span className={`px-2 py-1 rounded-full text-xs capitalize ${
-                      order.status === 'delivered' ? 'bg-green-100 text-green-800' :
-                      order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
+                    <span className={`px-2 py-1 rounded-full text-xs capitalize ${order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                        order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                          'bg-yellow-100 text-yellow-800'
+                      }`}>
                       {order.status}
                     </span>
                   </div>
@@ -116,7 +133,7 @@ export function Home() {
                     <div>
                       <p className="font-medium">
                         {order.order_items[0].products.name}
-                        {order.order_items.length > 1 && 
+                        {order.order_items.length > 1 &&
                           ` +${order.order_items.length - 1} more`}
                       </p>
                       <p className="text-sm text-gray-500">
@@ -140,7 +157,7 @@ export function Home() {
           )}
         </div>
       )}
-
+      {products && <ProductSearch />}
       {/* Products Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products?.map((product) => (
