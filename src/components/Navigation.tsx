@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/Button';
 import { ShoppingCart, Menu, User, LogOut, Package } from 'lucide-react';
 import { toast } from 'sonner';
+import { useCartStore } from '@/lib/store';
 
 export function Navigation({ onCartOpen }: { onCartOpen: () => void }) {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  const cart = useCartStore();
 
   const handleSignOut = async () => {
     try {
@@ -42,8 +45,9 @@ export function Navigation({ onCartOpen }: { onCartOpen: () => void }) {
                 <Button variant="ghost" onClick={handleSignOut}>
                   <LogOut className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" onClick={onCartOpen}>
+                <Button variant="ghost" onClick={onCartOpen} className='relative'>
                   <ShoppingCart className="h-5 w-5" />
+                  <span className='bg-red-500 text-white rounded-full h-5 w-5 font-xs absolute -top-1 -right-1'>{cart.items?.length || 0}</span>
                 </Button>
               </>
             ) : (
@@ -51,6 +55,7 @@ export function Navigation({ onCartOpen }: { onCartOpen: () => void }) {
                 <Button onClick={() => navigate('/signin')}>Sign in</Button>
                 <Button variant="ghost" onClick={onCartOpen}>
                   <ShoppingCart className="h-5 w-5" />
+                  <span>{cart.items?.length || 0}</span>
                 </Button>
               </>
             )}

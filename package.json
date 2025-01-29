@@ -28,6 +28,7 @@
     "supabase": "^2.6.8",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "tiptap": "^1.32.2",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
