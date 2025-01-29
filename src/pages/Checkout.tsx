@@ -161,6 +161,10 @@ export function Checkout() {
                 </li>
               ))}
             </ul>
+            <div className="p-4 flex gap-2 h-fit relative">
+            <Input label='Appy discounts' className='p-2 bg-gray-100'/>
+            <Button className='absolute bottom-5 right-5 h-9'>Apply</Button>
+            </div>
             <div className="border-t border-gray-200 p-4">
               <div className="flex justify-between text-base font-medium text-gray-900">
                 <p>Total</p>
